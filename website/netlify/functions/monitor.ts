@@ -12,7 +12,7 @@ const handler: Handler = async (event, context) => {
 // Add a new Ethereum validator to monitor.
 async function addMonitor(event: HandlerEvent) {
   const user = event.queryStringParameters["user"];
-  const validatorIndex = event.queryStringParameters["validator"];
+  const validatorIndex = event.queryStringParameters["validatorIndex"];
   if (!user || !user.startsWith("0x") || !validatorIndex) {
     return { statusCode: 500, body: "bad parameters" };
   }

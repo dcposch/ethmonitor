@@ -41,7 +41,7 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
       );
     }
 
-    const { account, accountName, monitors, validators } = this.state;
+    const { account, accountName, monitors } = this.state;
     if (!account) {
       return (
         <div>
@@ -60,6 +60,8 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
       );
     }
 
+    const extraValidators = this.getExtraValidators();
+
     const dispName = accountName || account.substring(0, 10) + "…";
     return (
       <div>
@@ -77,9 +79,14 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
             )}
           </p>
         ))}
-        <p>We found {validators.length} validators staked from your address.</p>
+        <div className="row">
+          <div>
+            We found {extraValidators.length} more validators you deposited.
+          </div>
+          <button onClick={this.addAll}>Add all</button>
+        </div>
         <p>
-          {validators.map((v) => (
+          {extraValidators.map((v) => (
             <>
               <a href={`https://beaconcha.in/validator/${v.validatorindex}`}>
                 #{v.validatorindex}
@@ -92,8 +99,14 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
           <button onClick={this.addValidator}>Add validator</button>
         </p>
         {monitors.length > 0 && <Notifications />}
-        <Notifications />
       </div>
+    );
+  }
+
+  getExtraValidators() {
+    const { validators, monitors } = this.state;
+    return validators.filter(
+      (v) => !monitors.find((m) => m.validatorindex === v.validatorindex)
     );
   }
 
@@ -112,29 +125,61 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
     console.log("Got account name", accountName);
     this.setState({ accountName });
 
-    let monitors: { validatorindex: number; status: string }[] = [];
-    let validators: { validatorindex: number }[] = [];
-    if (account) {
-      let resp = await fetch(`/.netlify/functions/validators?addr=${account}`);
-      validators = (await resp.json()).data;
-      console.log(`Fetched validators for ${account}`, validators);
-
-      resp = await fetch(`/.netlify/functions/monitor?user=${account}`);
-      monitors = await resp.json();
-      console.log(`Fetched monitors for ${account}`, monitors);
-    }
+    const monitors = account ? await this.fetchMonitors() : [];
+    const validators = account ? await this.fetchValidators() : [];
     this.setState({ monitors, validators });
   };
 
+  async fetchValidators() {
+    const { account } = this.state;
+    let resp = await fetch(`/.netlify/functions/validators?addr=${account}`);
+    const validators: { validatorindex: number }[] = (await resp.json()).data;
+    console.log(`Fetched validators for ${account}`, validators);
+
+    return validators;
+  }
+
+  async fetchMonitors() {
+    const { account } = this.state;
+    const resp = await fetch(`/.netlify/functions/monitor?user=${account}`);
+    const monitors: { validatorindex: number; status: string }[] =
+      await resp.json();
+    console.log(`Fetched monitors for ${account}`, monitors);
+
+    return monitors;
+  }
+
   inValidatorID = React.createRef<HTMLInputElement>();
 
+  addAll = async () => {
+    const extraValidators = this.getExtraValidators();
+    const promises = extraValidators.map((v) =>
+      this.postValidator(v.validatorindex)
+    );
+    await Promise.all(promises);
+
+    this.setState({ monitors: await this.fetchMonitors() });
+  };
+
   addValidator = async () => {
-    const validatorID = Number(this.inValidatorID.current.value);
-    if (!(validatorID > 0)) {
+    const validatorIndex = Number(this.inValidatorID.current.value);
+    if (!(validatorIndex > 0)) {
       window.alert("Invalid validator ID");
       return;
     }
+    await this.postValidator(validatorIndex);
 
-    console.log("Adding " + validatorID);
+    this.setState({ monitors: await this.fetchMonitors() });
+  };
+
+  postValidator = async (validatorIndex: number) => {
+    const { account } = this.state;
+    if (!account) throw new Error("not signed in");
+
+    console.log("Adding monitor " + validatorIndex);
+    await fetch(
+      `/.netlify/functions/monitor?user=${account}&validatorIndex=${validatorIndex}`,
+      { method: "POST" }
+    );
   };
 }
