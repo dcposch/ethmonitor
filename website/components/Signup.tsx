@@ -68,7 +68,7 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
         <h2>WELCOME, {dispName}!</h2>
         <p>You have {monitors.length} monitors.</p>
         {monitors.map((m) => (
-          <p className="row" key={m.validatorindex}>
+          <div className="row" key={m.validatorindex}>
             <a href={`https://beaconcha.in/validator/${m.validatorindex}`}>
               #{m.validatorindex}
             </a>
@@ -77,7 +77,7 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
             ) : (
               <mark>{m.status}</mark>
             )}
-          </p>
+          </div>
         ))}
         <div className="row">
           <div>
@@ -168,6 +168,7 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
       return;
     }
     await this.postValidator(validatorIndex);
+    this.inValidatorID.current.value = "";
 
     this.setState({ monitors: await this.fetchMonitors() });
   };

@@ -19,7 +19,7 @@ KEEP YOUR VALIDATORS HEALTHY
   // mirror effect
   const [loc, setLoc] = useState(-1200);
   useEffect(() => {
-    const onScroll = () => setLoc(Math.min(-900 + window.scrollY * 6, 0));
+    const onScroll = () => setLoc(Math.min(-1200 + window.scrollY * 6, 0));
     window.addEventListener("scroll", onScroll);
   }, []);
 
