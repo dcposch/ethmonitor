@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { ethers } from "ethers";
+import Notifications from "./Notification";
 
 // A Web3Provider wraps the standard provider that Metamask injects.
 const windowEth = window["ethereum"] as ethers.providers.ExternalProvider;
@@ -69,7 +70,7 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
             <a href={`https://beaconcha.in/validator/${m.validatorindex}`}>
               #{m.validatorindex}
             </a>
-            {m.status === "active" ? (
+            {m.status === "active_online" ? (
               <em>{m.status}</em>
             ) : (
               <mark>{m.status}</mark>
@@ -77,12 +78,21 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
           </p>
         ))}
         <p>We found {validators.length} validators staked from your address.</p>
-        <input
-          type="number"
-          placeholder="12345"
-          ref={this.inValidatorID}
-        ></input>
-        <button onClick={this.addValidator}>Add validator</button>
+        <p>
+          {validators.map((v) => (
+            <>
+              <a href={`https://beaconcha.in/validator/${v.validatorindex}`}>
+                #{v.validatorindex}
+              </a>{" "}
+            </>
+          ))}
+        </p>
+        <p className="row">
+          <input placeholder="12345" ref={this.inValidatorID}></input>
+          <button onClick={this.addValidator}>Add validator</button>
+        </p>
+        {monitors.length > 0 && <Notifications />}
+        <Notifications />
       </div>
     );
   }

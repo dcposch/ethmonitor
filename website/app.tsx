@@ -13,6 +13,9 @@ function App() {
       <Header />
       <Summary />
       <Signup />
+      <br />
+      <br />
+      <br />
       <Footer />
     </main>
   );

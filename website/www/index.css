@@ -67,6 +67,14 @@ button {
     padding: 0;
 }
 
+input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #444;
+    font-family: "Roboto Mono", monospace;
+    font-size: 16px;
+}
+
 strong {
     cursor: default;
 }
