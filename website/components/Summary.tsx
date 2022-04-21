@@ -5,15 +5,12 @@ export default function Summary() {
     <div>
       <h2>MONITOR YOUR ETHEREUM VALIDATORS</h2>
       <p>
-        <em>Get notified immediately if one of your validators is down.</em> You
-        can get an SMS or hit any REST API, for example to trigger PagerDuty.
+        <em>Get notified if a validator is down.</em> You can get an SMS or hit
+        any REST API, for example to trigger PagerDuty.
       </p>
+      <pre>{getExampleSms()}</pre>
       <p>
-        <pre>{getExampleSms()}</pre>
-      </p>
-      <p>
-        <em>Get a message every week summarizing your performance.</em> Example
-        below.
+        <em>Get a weekly performance summary.</em> Example below.
       </p>
     </div>
   );

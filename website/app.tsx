@@ -12,11 +12,7 @@ function App() {
     <main>
       <Header />
       <Summary />
-      <br />
-      <br />
       <Signup />
-      <br />
-      <br />
       <Footer />
     </main>
   );
