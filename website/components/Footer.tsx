@@ -8,6 +8,8 @@ export default function Footer() {
         <a href="https://esbuild.github.io/">esbuild</a>
       </div>
       <a href="https://github.com/dcposch/ethmonitor">view on Github</a>
+      <br />
+      <br />
     </div>
   );
 }
