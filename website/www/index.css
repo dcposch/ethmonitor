@@ -1,0 +1,82 @@
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+
+html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}
+ul{list-style:none}button,input,select{margin:0}
+html{box-sizing:border-box}
+*,*::before,*::after{box-sizing:inherit}
+img,video{height:auto;max-width:100%}
+iframe{border:0}
+table{border-collapse:collapse;border-spacing:0}
+td,th{padding:0}
+
+/* Bitcoin Mirror styles */
+
+body {
+    font-family: "Roboto Mono", monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #444;
+    text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+}
+
+pre {
+    font-family: "Roboto Mono", monospace;
+}
+
+main {
+    box-sizing: border-box;
+    width: 64ch;
+    margin: 0 auto;
+}
+
+h2 {
+    margin: 3em 0 1.5em 0;
+    font-weight: bold;
+}
+
+ol {
+    padding-left: 3ch;
+}
+
+p, li {
+    margin: 1.5em 0;
+}
+
+a {
+    color: #444;
+}
+
+em {
+    font-style: normal;
+    background-color: #ada;
+}
+
+mark {
+    font-style: normal;
+    background-color: #fec;
+}
+
+button {
+    border: none;
+    text-decoration: underline;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+strong {
+    cursor: default;
+}
+
+.hero {
+    position: relative;
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
