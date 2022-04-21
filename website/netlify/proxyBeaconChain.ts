@@ -9,6 +9,8 @@ export default async function proxyBeaconChain(
   path: string
 ): Promise<Response> {
   const url = `https://beaconcha.in/api/v1/${path}`;
+  console.log(`Fetching ${url}`);
+
   const resp = await fetch(url, { method: "GET", headers: { apiKey } });
   const body = await resp.text();
   if (resp.status !== 200) {

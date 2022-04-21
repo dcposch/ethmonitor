@@ -9,12 +9,14 @@ const provider = windowEth && new ethers.providers.Web3Provider(windowEth);
 interface SignupState {
   account?: string; // Ethereum hex address, eg 0x123456789012345678901234567890
   accountName?: string; // Display name, either 0x12345... or ENS
+  monitors: { validatorindex: number; status: string }[];
+  validators: { validatorindex: number }[];
 }
 
 export default class Signup extends React.PureComponent<{}, SignupState> {
   constructor(props: {}) {
     super(props);
-    this.state = {};
+    this.state = { monitors: [], validators: [] };
   }
 
   async componentDidMount() {
@@ -38,7 +40,7 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
       );
     }
 
-    const { account, accountName } = this.state;
+    const { account, accountName, monitors, validators } = this.state;
     if (!account) {
       return (
         <div>
@@ -61,8 +63,20 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
     return (
       <div>
         <h2>WELCOME, {dispName}!</h2>
-        <p>You have 0 monitors.</p>
-        <p>We found 0 validators staked from your address.</p>
+        <p>You have {monitors.length} monitors.</p>
+        {monitors.map((m) => (
+          <p className="row" key={m.validatorindex}>
+            <a href={`https://beaconcha.in/validator/${m.validatorindex}`}>
+              #{m.validatorindex}
+            </a>
+            {m.status === "active" ? (
+              <em>{m.status}</em>
+            ) : (
+              <mark>{m.status}</mark>
+            )}
+          </p>
+        ))}
+        <p>We found {validators.length} validators staked from your address.</p>
         <input
           type="number"
           placeholder="12345"
@@ -84,9 +98,22 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
     const account = accounts[0];
     this.setState({ account });
 
-    var accountName = await provider.lookupAddress(account);
+    const accountName = await provider.lookupAddress(account);
     console.log("Got account name", accountName);
     this.setState({ accountName });
+
+    let monitors: { validatorindex: number; status: string }[] = [];
+    let validators: { validatorindex: number }[] = [];
+    if (account) {
+      let resp = await fetch(`/.netlify/functions/validators?addr=${account}`);
+      validators = (await resp.json()).data;
+      console.log(`Fetched validators for ${account}`, validators);
+
+      resp = await fetch(`/.netlify/functions/monitor?user=${account}`);
+      monitors = await resp.json();
+      console.log(`Fetched monitors for ${account}`, monitors);
+    }
+    this.setState({ monitors, validators });
   };
 
   inValidatorID = React.createRef<HTMLInputElement>();
