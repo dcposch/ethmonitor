@@ -9,9 +9,6 @@ export default function Summary() {
         any REST API, for example to trigger PagerDuty.
       </p>
       <pre>{getExampleSms()}</pre>
-      <p>
-        <em>Get a weekly performance summary.</em> Example below.
-      </p>
     </div>
   );
 }

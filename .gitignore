@@ -1,3 +1,6 @@
 # Web
 node_modules/
 website/www/js/
+
+# Backend
+.netlify/

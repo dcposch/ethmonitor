@@ -25,19 +25,19 @@
 
 ## Monitor your Ethereum validators
 
-You get an notification immediately if one of your validators is down.
-
-You get an message every week summarizing your performance.
+You get an notification if one of your validators is down.
 
 ### Today
 
-Supports email and PagerDuty.
+Supports SMS.
 
 Uses the beaconcha.in API to track validator performance.
 
 ### Future
 
-Might support direct SMS notifications. You can get those today thru Pagerduty.
+Might add a weekly performance report email.
+
+Might support PagerDuty.
 
 Might track validator performance directly.
 

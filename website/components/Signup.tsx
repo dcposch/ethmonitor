@@ -17,6 +17,16 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
     this.state = {};
   }
 
+  async componentDidMount() {
+    if (!provider) return;
+
+    const accounts: string[] = await provider.send("eth_accounts", []);
+    console.log("Got accounts", accounts);
+    this.setEthAccounts(accounts);
+
+    provider.on("accountsChanged", this.setEthAccounts);
+  }
+
   render() {
     if (!provider) {
       return (
@@ -66,7 +76,11 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
   signUp = async () => {
     // Request Metamask account.
     const accounts: string[] = await provider.send("eth_requestAccounts", []);
-    console.log("Got accounts", accounts);
+    console.log("Requested accounts", accounts);
+    this.setEthAccounts(accounts);
+  };
+
+  setEthAccounts = async (accounts: string[]) => {
     const account = accounts[0];
     this.setState({ account });
 
