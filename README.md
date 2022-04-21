@@ -23,7 +23,7 @@
                                         +
 ```
 
-## EthMonitor watches your Ethereum validators
+## Monitor your Ethereum validators
 
 You get an notification immediately if one of your validators is down.
 
