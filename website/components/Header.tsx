@@ -25,11 +25,11 @@ KEEP YOUR VALIDATORS HEALTHY
 
   const percent = Math.exp(-(500 * 500) / (loc * loc)) * 100;
   const gradientStops = [
-    `#999 ${percent - 10}%`,
+    `#888 ${percent - 10}%`,
     `#bbb ${percent - 5}%`,
     `#fff ${percent + 0}%`,
     `#bbb ${percent + 5}%`,
-    `#777 ${percent + 10}%`,
+    `#555 ${percent + 10}%`,
   ];
   const mirrorStyle: CSSProperties = {
     backgroundImage: `linear-gradient(45deg, ${gradientStops.join(", ")})`,
