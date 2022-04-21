@@ -1,0 +1,14 @@
+{
+  "name": "netlify",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "tslint"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@netlify/functions": "^1.0.0",
+    "tslint": "^6.1.3"
+  }
+}
