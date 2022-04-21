@@ -69,7 +69,10 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
         <p>You have {monitors.length} monitors.</p>
         {monitors.map((m) => (
           <div className="row" key={m.validatorindex}>
-            <a href={`https://beaconcha.in/validator/${m.validatorindex}`}>
+            <a
+              href={`https://beaconcha.in/validator/${m.validatorindex}`}
+              target="_blank"
+            >
               #{m.validatorindex}
             </a>
             {m.status === "active_online" ? (
@@ -88,7 +91,10 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
         <p>
           {extraValidators.map((v) => (
             <>
-              <a href={`https://beaconcha.in/validator/${v.validatorindex}`}>
+              <a
+                href={`https://beaconcha.in/validator/${v.validatorindex}`}
+                target="_blank"
+              >
                 #{v.validatorindex}
               </a>{" "}
             </>
