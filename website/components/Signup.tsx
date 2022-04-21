@@ -82,24 +82,28 @@ export default class Signup extends React.PureComponent<{}, SignupState> {
             )}
           </div>
         ))}
-        <div className="row">
-          <div>
-            We found {extraValidators.length} more validators you deposited.
-          </div>
-          <button onClick={this.addAll}>Add all</button>
-        </div>
-        <p>
-          {extraValidators.map((v) => (
-            <>
-              <a
-                href={`https://beaconcha.in/validator/${v.validatorindex}`}
-                target="_blank"
-              >
-                #{v.validatorindex}
-              </a>{" "}
-            </>
-          ))}
-        </p>
+        {extraValidators.length > 0 && (
+          <>
+            <p className="row">
+              <span>
+                We found {extraValidators.length} more validators you deposited.
+              </span>
+              <button onClick={this.addAll}>Add all</button>
+            </p>
+            <p>
+              {extraValidators.map((v) => (
+                <>
+                  <a
+                    href={`https://beaconcha.in/validator/${v.validatorindex}`}
+                    target="_blank"
+                  >
+                    #{v.validatorindex}
+                  </a>{" "}
+                </>
+              ))}
+            </p>
+          </>
+        )}
         <p className="row">
           <input placeholder="12345" ref={this.inValidatorID}></input>
           <button onClick={this.addValidator}>Add validator</button>
